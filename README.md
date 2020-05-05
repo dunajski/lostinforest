@@ -6,6 +6,7 @@
 
 ### Wish me luck
 
+### Folder Drivers/ is ignored to reduce whole repo size.
 
 
 ##### dnj

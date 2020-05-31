@@ -1,0 +1,11 @@
+{
+	"folders": [
+		{
+			"path": ".."
+		}
+	],
+	"settings": {
+		"cortex-debug.openocdPath": "openocd",
+		"cortex-debug.armToolchainPath": ""
+	}
+}

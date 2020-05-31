@@ -3,6 +3,5 @@
 build/
 Drivers/
 docs/datasheets/
-.vscode/
 docs/
 Debug/

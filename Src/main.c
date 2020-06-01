@@ -1,7 +1,9 @@
+// dnj
+
 #include <stdint.h>
 
 #include "stm32f030x8.h"
-typedef uint32_t uint32;
+#include "../inc/types.h"
 
 #define DELAY_TEST 3000000
 

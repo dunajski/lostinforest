@@ -93,7 +93,6 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--Iinc \
 -IDrivers/CMSIS/Device/ST/STM32F0xx/Include \
 -IDrivers/CMSIS/Include \
 

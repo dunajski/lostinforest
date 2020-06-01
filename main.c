@@ -3,9 +3,9 @@
 #include <stdint.h>
 
 #include "stm32f030x8.h"
-#include "../inc/types.h"
+#include "types.h"
 
-#define DELAY_TEST 3000000
+#define DELAY_TEST 300000
 
 void Delay(volatile uint32 n)
 {

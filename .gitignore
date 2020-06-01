@@ -1,7 +1,7 @@
 # simple gitignore comment
 
 build/
-Drivers/
+drivers/CMSIS/
 docs/datasheets/
 docs/
 Debug/

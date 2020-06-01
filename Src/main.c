@@ -3,6 +3,8 @@
 #include "stm32f030x8.h"
 typedef uint32_t uint32;
 
+#define DELAY_TEST 3000000
+
 void Delay(volatile uint32 n)
 {
   while (n > 0) n--;
@@ -19,8 +21,8 @@ int main(void)
   while (1)
   {
     GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
-    Delay(300000);
+    Delay(DELAY_TEST);
     GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
-    Delay(300000);
+    Delay(DELAY_TEST);
   }
 }

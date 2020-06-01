@@ -23,5 +23,15 @@
                 "isDefault": true
             }
         },
-    ]
+        {
+          "label" : "wgraj_elf",
+          "type" : "shell",
+          "command" : "openocd -f C:/openocd/scripts/interface/stlink-v1.cfg -f C:/openocd/scripts/board/stm32f0discovery.cfg -c \"program build/lostinforest.elf verify reset exit\"",
+          "problemMatcher": [],
+          "group": {
+              "kind": "build",
+              "isDefault": true
+          }
+        }
+      ]
 }

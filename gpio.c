@@ -13,19 +13,19 @@ void EnableGpioClock(EGpioPorts gpio_port)
 {
   switch (gpio_port)
   {
-    case GPIOA_Port:
+    case GPIOA_PORT:
       RCC->AHBENR |= RCC_AHBENR_GPIOAEN;
       break;
-    case GPIOB_Port:
+    case GPIOB_PORT:
       RCC->AHBENR |= RCC_AHBENR_GPIOBEN;
       break;
-    case GPIOC_Port:
+    case GPIOC_PORT:
       RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
       break;
-    case GPIOD_Port:
+    case GPIOD_PORT:
       RCC->AHBENR |= RCC_AHBENR_GPIODEN;
       break;
-    case GPIOF_Port:
+    case GPIOF_PORT:
       RCC->AHBENR |= RCC_AHBENR_GPIOFEN;
       break;
     default:

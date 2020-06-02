@@ -16,7 +16,7 @@ void Delay(volatile uint32 n)
 int main(void)
 {
   // turn on GPIO clocks
-  EnableGpioClock(GPIOC_Port);
+  EnableGpioClock(GPIOC_PORT);
   // SET GPIO as Push-Pull Output
   GPIOC->MODER = (GPIOC->MODER & (~GPIO_MODER_MODER0)) | (0 | (0x01 * GPIO_MODER_MODER9_0));
 

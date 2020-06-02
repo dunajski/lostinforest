@@ -37,7 +37,8 @@ BUILD_DIR = build
 # C sources
 C_SOURCES =  \
 src/main.c \
-src/system_stm32f0xx.c  
+src/system_stm32f0xx.c \
+src/gpio.c
 
 # ASM sources
 ASM_SOURCES =  \

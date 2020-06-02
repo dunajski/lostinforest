@@ -4,6 +4,7 @@
 
 #include "stm32f030x8.h"
 #include "types.h"
+#include "gpio.h"
 
 #define DELAY_TEST 300000
 
@@ -12,11 +13,10 @@ void Delay(volatile uint32 n)
   while (n > 0) n--;
 }
 
-
 int main(void)
 {
   // turn on GPIO clocks
-  RCC->AHBENR |= RCC_AHBENR_GPIOCEN;
+  EnableGpioClock(GPIOC_Port);
   // SET GPIO as Push-Pull Output
   GPIOC->MODER = (GPIOC->MODER & (~GPIO_MODER_MODER0)) | (0 | (0x01 * GPIO_MODER_MODER9_0));
 
@@ -27,4 +27,6 @@ int main(void)
     GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
     Delay(DELAY_TEST);
   }
+
+  return 0;
 }

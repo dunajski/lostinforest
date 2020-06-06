@@ -3,8 +3,8 @@
 #include <stdint.h>
 
 #include "stm32f030x8.h"
-#include "types.h"
 #include "gpio.h"
+#include "types.h"
 
 #define DELAY_TEST 300000
 

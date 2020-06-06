@@ -36,9 +36,9 @@ BUILD_DIR = build
 ######################################
 # C sources
 C_SOURCES =  \
-src/main.c \
-src/system_stm32f0xx.c \
-src/gpio.c
+main.c \
+system_stm32f0xx.c \
+gpio.c
 
 # ASM sources
 ASM_SOURCES =  \
@@ -94,8 +94,6 @@ AS_INCLUDES =
 
 # C includes
 C_INCLUDES =  \
--IDrivers/CMSIS/Device/ST/STM32F0xx/Include \
--IDrivers/CMSIS/Include \
 
 
 # compile gcc flags
@@ -168,5 +166,5 @@ clean:
 -include $(wildcard $(BUILD_DIR)/*.d)
 
 flash:
-	openocd -f C:/openocd/scripts/interface/stlink-v1.cfg -f C:/openocd/scripts/board/stm32f0discovery.cfg -c "program build/lostinforest.elf verify reset exit"
+	openocd -f /usr/share/openocd/scripts/interface/stlink-v1.cfg -f /usr/share/openocd/scripts/board/stm32f0discovery.cfg -c "program build/lostinforest.elf verify reset exit"
 # *** EOF ***

@@ -6,12 +6,7 @@
 #include "gpio.h"
 #include "types.h"
 
-#define DELAY_TEST 300000
-
-void Delay(volatile uint32 n)
-{
-  while (n > 0) n--;
-}
+#define HSI_VALUE 8000000
 
 int main(void)
 {
@@ -20,13 +15,27 @@ int main(void)
   // SET GPIO as Push-Pull Output
   GPIOC->MODER = (GPIOC->MODER & (~GPIO_MODER_MODER0)) | (0 | (0x01 * GPIO_MODER_MODER9_0));
 
+  SysTick_Config(HSI_VALUE - 1);
+
   while (1)
   {
-    GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
-    Delay(DELAY_TEST);
-    GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
-    Delay(DELAY_TEST);
   }
 
   return 0;
+}
+
+volatile uint32 isr_test;
+void SysTick_Handler(void)
+{
+
+  if (!isr_test)
+  {
+    GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
+    isr_test = 1;
+  }
+  else if (isr_test)
+  {
+    GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
+    isr_test = 0;
+  }
 }

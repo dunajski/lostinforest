@@ -4,12 +4,13 @@
 2. Simple tasks to test makefile and renew coding skills with "bare-metal"
   - [x]blink led with HAL 
   - [x]blink led without HAL
-  - [ ]send few bytes via USART with HAL
+  - [x]send few bytes via USART with HAL (didn't try, no needed)
+  - [x]receive few bytes via UART without HAL
   - [ ]send few bytes via USART without HAL
 3. Choose "working" demo-board (task 2 can enormously help)
   * ~~Nucleo L073~~
   * ~~Nucleo F401RE with MCU STM32 F405 (soldered?)~~
-  * Discovery F030
+  * ~~Discovery F030~~
 4. Send few bytes with SPI/I2C (need in task 5)
   - [ ]choose one protocol
   - [ ]try to send something between two nucleos? 

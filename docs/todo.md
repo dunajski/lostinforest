@@ -6,7 +6,7 @@
   - [x]blink led without HAL
   - [x]send few bytes via USART with HAL (didn't try, no needed)
   - [x]receive few bytes via UART without HAL
-  - [ ]send few bytes via USART without HAL
+  - [x]send few bytes via USART without HAL
 3. Choose "working" demo-board (task 2 can enormously help)
   * ~~Nucleo L073~~
   * ~~Nucleo F401RE with MCU STM32 F405 (soldered?)~~
@@ -22,7 +22,8 @@
 7. Test equations with some sample measurements
 8. Interface with user
 
-### GPIO tasks:
+### tasks:
   1. EGpioType as full structure instead of enums - reason?  
   It's gonna be painful to add every combination when use new type,  
   matrix of possibilities.
+  2. TX/RX UART full in interrupts.

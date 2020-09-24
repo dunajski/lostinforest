@@ -8,6 +8,7 @@
 
 #define HSI_VALUE 8000000L
 void UsartConfig(void);
+void SendByteViaUart(uint8_t byte);
 
 int main(void)
 {
@@ -27,26 +28,36 @@ int main(void)
 
   return 0;
 }
-
+uint8_t stringtosend[] = {"TX WORKS\n"};
+int i = 0;
 void SysTick_Handler(void)
 {
+  SendByteViaUart(stringtosend[i++]);
+
+  if (i >= 9) i = 0;
 }
 
 void UsartConfig(void)
 {
   EnableGpioClock(GPIOB_PORT);
-  GPIOB->MODER &= (~GPIO_MODER_MODER7_0);
-  GPIOB->MODER |= (GPIO_MODER_MODER7_1);
   GPIOB->MODER &= (~GPIO_MODER_MODER6_0);
   GPIOB->MODER |= (GPIO_MODER_MODER6_1);
+  GPIOB->MODER &= (~GPIO_MODER_MODER7_0);
+  GPIOB->MODER |= (GPIO_MODER_MODER7_1);
   GPIOB->OSPEEDR = 0xffffffff;
   RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 
   USART1->BRR = HSI_VALUE / 9600L;
-  USART1->CR1 |= USART_CR1_RXNEIE | USART_CR1_RE | USART_CR1_UE;
+  USART1->CR1 |= USART_CR1_RXNEIE | USART_CR1_RE | USART_CR1_UE  | USART_CR1_TE;
 }
 
 char volatile chartoreceive;
+
+void SendByteViaUart(uint8_t byte)
+{
+  USART1->TDR = byte;
+}
+
 void USART1_IRQHandler(void)
 {
   if ((USART1->ISR & USART_ISR_RXNE) == USART_ISR_RXNE)

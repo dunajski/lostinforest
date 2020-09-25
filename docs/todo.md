@@ -27,3 +27,4 @@
   It's gonna be painful to add every combination when use new type,  
   matrix of possibilities.
   2. TX/RX UART full in interrupts.
+  3. TX/RX circular buffers.

@@ -10,6 +10,10 @@
 void UsartConfig(void);
 void SendByteViaUart(uint8_t byte);
 
+int i = 0;
+uint8_t stringtosend[] = {"TX WORKS\n"};
+uint8_t sent =0;
+
 int main(void)
 {
   // turn on GPIO clocks
@@ -24,17 +28,19 @@ int main(void)
 
   while (1)
   {
+    if (sent)
+    {
+      sent = 0;
+      SendByteViaUart(stringtosend[i++]);
+    }
+    if (i >= 9) i = 0;
   }
 
   return 0;
 }
-uint8_t stringtosend[] = {"TX WORKS\n"};
-int i = 0;
+
 void SysTick_Handler(void)
 {
-  SendByteViaUart(stringtosend[i++]);
-
-  if (i >= 9) i = 0;
 }
 
 void UsartConfig(void)
@@ -48,7 +54,7 @@ void UsartConfig(void)
   RCC->APB2ENR |= RCC_APB2ENR_USART1EN;
 
   USART1->BRR = HSI_VALUE / 9600L;
-  USART1->CR1 |= USART_CR1_RXNEIE | USART_CR1_RE | USART_CR1_UE  | USART_CR1_TE;
+  USART1->CR1 |= USART_CR1_RXNEIE | USART_CR1_RE | USART_CR1_UE  | USART_CR1_TE | USART_CR1_TCIE;
 }
 
 char volatile chartoreceive;
@@ -63,10 +69,17 @@ void USART1_IRQHandler(void)
   if ((USART1->ISR & USART_ISR_RXNE) == USART_ISR_RXNE)
   {
     chartoreceive = (uint8_t)(USART1->RDR); /* Receive data, clear flag */
+
+    if (chartoreceive == 'z')
+      GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
+    else if (chartoreceive == 'x')
+      GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
   }
 
-  if (chartoreceive == 'z')
-    GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
-  else if (chartoreceive == 'x')
-    GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
+  // Byte was successfully sent
+  if ((USART1->ISR & USART_ISR_TC) == USART_ISR_TC)
+  {
+    sent = 1;
+    USART1->ICR |= USART_ICR_TCCF;
+  }
 }

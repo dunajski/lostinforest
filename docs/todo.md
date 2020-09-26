@@ -28,3 +28,4 @@
   matrix of possibilities.
   2. TX/RX UART full in interrupts.
   3. TX/RX circular buffers.
+  4. DOCUMENTATION

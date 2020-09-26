@@ -10,9 +10,30 @@
 void UsartConfig(void);
 void SendByteViaUart(uint8_t byte);
 
-int i = 0;
 uint8_t stringtosend[] = {"TX WORKS\n"};
-uint8_t sent =0;
+
+#define FIFO_SIZE 512
+typedef struct
+{
+  uint16 ri;
+  uint16 wi;
+  uchar fifo[FIFO_SIZE];
+} TCircularBuf;
+
+TCircularBuf Input;
+TCircularBuf Output;
+
+void PutToSerial(uint8 * value, uint16 len)
+{
+  // fill circular buffer
+  while (len--)
+  {
+    Output.fifo[Output.wi++] = *value++;
+    if (Output.wi == FIFO_SIZE) Output.wi = 0;
+  }
+  // and send 1st byte
+  USART1->TDR = Output.fifo[Output.ri++];
+}
 
 int main(void)
 {
@@ -26,14 +47,9 @@ int main(void)
   NVIC_SetPriority(USART1_IRQn, 0);
   UsartConfig();
 
+  PutToSerial(stringtosend, 10);
   while (1)
   {
-    if (sent)
-    {
-      sent = 0;
-      SendByteViaUart(stringtosend[i++]);
-    }
-    if (i >= 9) i = 0;
   }
 
   return 0;
@@ -73,13 +89,22 @@ void USART1_IRQHandler(void)
     if (chartoreceive == 'z')
       GPIOC->BSRR = (0 | GPIO_BSRR_BS_9);
     else if (chartoreceive == 'x')
+
       GPIOC->BSRR = (0 | GPIO_BSRR_BR_9);
+
+    Input.fifo[Input.wi++] = chartoreceive;
+    if (Input.wi == FIFO_SIZE) 
+      Input.wi = 0;
   }
 
   // Byte was successfully sent
   if ((USART1->ISR & USART_ISR_TC) == USART_ISR_TC)
   {
-    sent = 1;
     USART1->ICR |= USART_ICR_TCCF;
+    if (Output.ri != Output.wi)
+    {
+      USART1->TDR = Output.fifo[Output.ri++];
+      if (Output.ri == FIFO_SIZE) Output.ri = 0;
+    }
   }
 }

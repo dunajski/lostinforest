@@ -3,6 +3,8 @@
 
 #include "stdint.h"
 
+#define HSI_VALUE 8000000L // system_stm32f0xx.c
+
 typedef unsigned char uchar;
 typedef uint16_t uint16;
 typedef int16_t int16;

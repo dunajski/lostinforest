@@ -3,7 +3,7 @@
 
 #include "types.h"
 
-void UartConfig(void);
+void UARTInit(void);
 void PutToSerial(uint8 * value, uint16 len);
 
 #endif

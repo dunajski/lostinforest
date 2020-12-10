@@ -26,15 +26,17 @@ void PutToSerial(uint8 * value, uint16 len)
   USART1->TDR = Output.fifo[Output.ri++];
 }
 
-void UartConfig(void)
+void UARTInit(void)
 {
   EnableGpioClock(GPIOB_PORT);
   // Set PB6,PB7 as AF Gpio type
+  // TODO make it clean x_x
   GPIOB->MODER &= (~GPIO_MODER_MODER6_0);
   GPIOB->MODER |= (GPIO_MODER_MODER6_1);
   GPIOB->MODER &= (~GPIO_MODER_MODER7_0);
   GPIOB->MODER |= (GPIO_MODER_MODER7_1);
   // Set all gpios at max speed, don't care here
+  // TODO change it to proper value, does every gpio need fast SPEED?
   GPIOB->OSPEEDR = 0xffffffff;
 
   RCC->APB2ENR |= RCC_APB2ENR_USART1EN; // Enable clock for USART1

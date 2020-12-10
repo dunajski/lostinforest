@@ -25,6 +25,7 @@ typedef enum
 // PD = pull-down,
 // OD = open-drain,
 // AF = alternate function.
+// TODO, Consider is it worth a special type?
 typedef enum
 {
   O_GP_PP_NP = 0,

@@ -6,6 +6,7 @@
 #include "gpio.h"
 #include "types.h"
 #include "uart.h"
+#include "spi.h"
 
 uchar stringtosend[] = {"TX WORKS\n"};
 
@@ -19,7 +20,8 @@ int main(void)
   SysTick_Config(HSI_VALUE - 1);
   NVIC_EnableIRQ(USART1_IRQn);
   NVIC_SetPriority(USART1_IRQn, 0);
-  UartConfig();
+  UARTInit();
+  SPIInit();
 
   PutToSerial(stringtosend, 10);
   while (1)

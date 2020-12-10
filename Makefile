@@ -39,7 +39,8 @@ C_SOURCES =  \
 main.c \
 system_stm32f0xx.c \
 gpio.c \
-uart.c
+uart.c \
+spi.c
 
 # ASM sources
 ASM_SOURCES =  \

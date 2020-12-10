@@ -12,20 +12,19 @@
   * ~~Nucleo F401RE with MCU STM32 F405 (soldered?)~~
   * ~~Discovery F030~~
 4. Send few bytes with SPI/I2C (need in task 5)
-  - [ ]choose one protocol
-  - [ ]try to send something between two nucleos? 
+  - [x]choose one protocol
 5. Learn how to use LIS3DH
-  - [ ]datasheets
+  - [x]datasheets
   - [ ]examples (github etc.)
   - [ ]experimenting
 6. Learn mathematics related to using sensor mentioned above
 7. Test equations with some sample measurements
 8. Interface with user
 
-### tasks:
-  1. EGpioType as full structure instead of enums - reason?  
-  It's gonna be painful to add every combination when use new type,  
-  matrix of possibilities.
-  2. TX/RX UART full in interrupts.
+### handy task list:
+  1. ~~EGpioType as full structure instead of enums - reason? It's gonna be painful to add every combination when use new type, matrix of possibilities.~~
+  2. ~~TX/RX UART full in interrupts.~~
   3. TX/RX circular buffers.
+    * SPI,
+    * UART.
   4. DOCUMENTATION

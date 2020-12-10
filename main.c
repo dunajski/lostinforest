@@ -20,6 +20,8 @@ int main(void)
   SysTick_Config(HSI_VALUE - 1);
   NVIC_EnableIRQ(USART1_IRQn);
   NVIC_SetPriority(USART1_IRQn, 0);
+  NVIC_EnableIRQ(SPI1_IRQn);
+  NVIC_SetPriority(SPI1_IRQn, 0);
   UARTInit();
   SPIInit();
 

@@ -46,6 +46,9 @@ void UARTInit(void)
   USART1->CR1 |= USART_CR1_UE | USART_CR1_RE | USART_CR1_TE | USART_CR1_RXNEIE | USART_CR1_TCIE;
 }
 
+uint8 stringenableled[13] = {"LED ENABLED\n"};
+uint8 stringdisableled[14] = {"LED DISABLED\n"};
+
 void USART1_IRQHandler(void)
 {
   // RX register not empty (RXNE)
@@ -55,9 +58,15 @@ void USART1_IRQHandler(void)
     rx_char = (uchar)(USART1->RDR); /* Receive data, clear flag */
 
     if (rx_char == 'e') // enable LED
+    {
+      PutToSerial(stringenableled,13);
       GPIOC->BSRR = GPIO_BSRR_BS_9;
+    }
     else if (rx_char == 'd') // disable LED
+    {
+      PutToSerial(stringdisableled,14);
       GPIOC->BSRR = GPIO_BSRR_BR_9;
+    }
 
     Input.fifo[Input.wi++] = rx_char;
     if (Input.wi == FIFO_SIZE) 

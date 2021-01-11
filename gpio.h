@@ -12,25 +12,20 @@ typedef enum
   GPIOF_PORT,
 } EGpioPorts;
 
-// add new IO config when need
-// definition A_B_C_D where:
-// A - I/O, B - GI/GO/AF, C - PP/OD, D - NP/PU/PD.
-// Example: O_GP_PP_NP
-// check table of possible type for IO in reference manual
-// naming taken from reference manual:
-// GP = general-purpose,
-// PP = push-pull,
-// NP = no pull-up/down
-// PU = pull-up,
-// PD = pull-down,
-// OD = open-drain,
-// AF = alternate function.
-// TODO, Consider is it worth a special type?
+void EnableGpioClock(EGpioPorts gpio_port);
+
 typedef enum
 {
-  O_GP_PP_NP = 0,
-} EIoType;
+  _INPUT  =    0x00,
+  _OUTPUT =    0x01,
+  _ALTERNATE = 0x02,
+  _ANALOG =    0x03,
+} EGpioType;
 
-void EnableGpioClock(EGpioPorts gpio_port);
+#define SetGpioMode(PORT, PIN, TYPE) (PORT->MODER = (volatile uint32)((PORT->MODER & (~(0x03 << (PIN * 2)) | (PORT->MODER | (TYPE << (PIN * 2))))
+#define SetGpioAsAlternate(PORT, PIN) (SetGpioMode(PORT, PIN, _ALTERNATE))
+#define SetGpioAsAnalog(PORT, PIN)    (SetGpioMode(PORT, PIN, _ANALOG))
+#define SetGpioAsInput(PORT, PIN)     (SetGpioMode(PORT, PIN, _INPUT))
+#define SetGpioAsOutput(PORT, PIN)    (SetGpioMode(PORT, PIN, _OUTPUT))
 
 #endif

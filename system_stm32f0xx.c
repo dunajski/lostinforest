@@ -37,49 +37,10 @@
   *        APB1 Prescaler                         | 1
   *-----------------------------------------------------------------------------
   *=============================================================================
-  ******************************************************************************
-  * @attention
-  *
-  * <h2><center>&copy; Copyright (c) 2016 STMicroelectronics.
-  * All rights reserved.</center></h2>
-  *
-  * This software component is licensed by ST under BSD 3-Clause license,
-  * the "License"; You may not use this file except in compliance with the
-  * License. You may obtain a copy of the License at:
-  *                        opensource.org/licenses/BSD-3-Clause
-  *
-  ******************************************************************************
-  */
-
-/** @addtogroup CMSIS
-  * @{
-  */
-
-/** @addtogroup stm32f0xx_system
-  * @{
-  */
-
-/** @addtogroup STM32F0xx_System_Private_Includes
-  * @{
   */
 
 #include "stm32f0xx.h"
 
-/**
-  * @}
-  */
-
-/** @addtogroup STM32F0xx_System_Private_TypesDefinitions
-  * @{
-  */
-
-/**
-  * @}
-  */
-
-/** @addtogroup STM32F0xx_System_Private_Defines
-  * @{
-  */
 #if !defined  (HSE_VALUE) 
   #define HSE_VALUE    ((uint32_t)8000000) /*!< Default value of the External oscillator in Hz.
                                                 This value can be provided and adapted by the user application. */
@@ -94,21 +55,7 @@
 #define HSI48_VALUE    ((uint32_t)48000000) /*!< Default value of the HSI48 Internal oscillator in Hz.
                                                  This value can be provided and adapted by the user application. */
 #endif /* HSI48_VALUE */
-/**
-  * @}
-  */
 
-/** @addtogroup STM32F0xx_System_Private_Macros
-  * @{
-  */
-
-/**
-  * @}
-  */
-
-/** @addtogroup STM32F0xx_System_Private_Variables
-  * @{
-  */
   /* This variable is updated in three ways:
       1) by calling CMSIS function SystemCoreClockUpdate()
       2) by calling HAL API function HAL_RCC_GetHCLKFreq()
@@ -122,27 +69,6 @@ uint32_t SystemCoreClock = 8000000;
 const uint8_t AHBPrescTable[16] = {0, 0, 0, 0, 0, 0, 0, 0, 1, 2, 3, 4, 6, 7, 8, 9};
 const uint8_t APBPrescTable[8]  = {0, 0, 0, 0, 1, 2, 3, 4};
 
-/**
-  * @}
-  */
-
-/** @addtogroup STM32F0xx_System_Private_FunctionPrototypes
-  * @{
-  */
-
-/**
-  * @}
-  */
-
-/** @addtogroup STM32F0xx_System_Private_Functions
-  * @{
-  */
-
-/**
-  * @brief  Setup the microcontroller system.
-  * @param  None
-  * @retval None
-  */
 void SystemInit(void)
 {
   /* NOTE :SystemInit(): This function is called at startup just after reset and 
@@ -248,18 +174,3 @@ void SystemCoreClockUpdate (void)
   /* HCLK clock frequency */
   SystemCoreClock >>= tmp;
 }
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/**
-  * @}
-  */
-
-/************************ (C) COPYRIGHT STMicroelectronics *****END OF FILE****/
-

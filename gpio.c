@@ -28,3 +28,4 @@ void EnableGpioClock(EGpioPorts gpio_port)
       break;
   }
 }
+

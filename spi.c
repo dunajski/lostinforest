@@ -9,23 +9,13 @@
 
 void SPIInit(void)
 {
-  // MISO PA6
-  // MOSI PA7
-  // SCK  PA5
-  // CS   PA4
-  EnableGpioClock(GPIOA_PORT);
+  EnablePortGpio(A);
 
-  GPIOA->MODER &= (~GPIO_MODER_MODER5_0);
-  GPIOA->MODER |= (GPIO_MODER_MODER5_1);
-  
-  GPIOA->MODER &= (~GPIO_MODER_MODER6_0);
-  GPIOA->MODER |= (GPIO_MODER_MODER6_1);
-
-  GPIOA->MODER &= (~GPIO_MODER_MODER7_0);
-  GPIOA->MODER |= (GPIO_MODER_MODER7_1);
-
+  SetGpioAsAlternate(GPIOA, MOSI1);
+  SetGpioAsAlternate(GPIOA, MISO1);
+  SetGpioAsAlternate(GPIOA, SCK1);
   // TODO, check what is better use as AF or change state manually.
-  GPIOA->MODER |= (GPIO_MODER_MODER4_0);
+  SetGpioAsOutput(GPIOA, CS1);
 
   // TODO consider that all GPIOs need fast speed?
   GPIOA->OSPEEDR = 0xffffffff;
@@ -39,7 +29,8 @@ void SPIInit(void)
   // interrupt after 8bit FIFO, 8bit, no need multimaster, TX/RX interrupts
   SPI1->CR2 = SPI_CR2_FRXTH | SPI_CR2_DS_0 | SPI_CR2_DS_1 | SPI_CR2_DS_2 | SPI_CR2_SSOE | SPI_CR2_TXEIE | SPI_CR2_RXNEIE;
 
-  SPI1->CR1 = SPI_CR1_SPE; // ENABLE SPI peripheral
+  // TODO uncomment when sure how to use SPI ISRs
+  // SPI1->CR1 = SPI_CR1_SPE; // ENABLE SPI peripheral
 }
 
 void SPI1_IRQHandler(void)

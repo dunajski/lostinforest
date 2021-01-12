@@ -3,29 +3,54 @@
 
 #include "types.h"
 
+//////////
+// PINS //
+//////////
+// PORT A 
+#define CS1   4
+#define MISO1 6
+#define MOSI1 7
+#define SCK1  5
+
+#define B1    0 // Blue Button named B1, PA0
+// PORT B 
+#define TX1 6
+#define RX1 7
+// PORT C 
+#define LED3 9 // LED named LED3, PC9
+
+
+
+
 typedef enum
 {
-  GPIOA_PORT = 0,
-  GPIOB_PORT,
-  GPIOC_PORT,
-  GPIOD_PORT,
-  GPIOF_PORT,
-} EGpioPorts;
-
-void EnableGpioClock(EGpioPorts gpio_port);
-
-typedef enum
-{
-  _INPUT  =    0x00,
-  _OUTPUT =    0x01,
-  _ALTERNATE = 0x02,
-  _ANALOG =    0x03,
+  _INPUT  =    0x0UL,
+  _OUTPUT =    0x1UL,
+  _ALTERNATE = 0x2UL,
+  _ANALOG =    0x3UL,
 } EGpioType;
 
-#define SetGpioMode(PORT, PIN, TYPE) (PORT->MODER = (volatile uint32)((PORT->MODER & (~(0x03 << (PIN * 2)) | (PORT->MODER | (TYPE << (PIN * 2))))
-#define SetGpioAsAlternate(PORT, PIN) (SetGpioMode(PORT, PIN, _ALTERNATE))
-#define SetGpioAsAnalog(PORT, PIN)    (SetGpioMode(PORT, PIN, _ANALOG))
-#define SetGpioAsInput(PORT, PIN)     (SetGpioMode(PORT, PIN, _INPUT))
-#define SetGpioAsOutput(PORT, PIN)    (SetGpioMode(PORT, PIN, _OUTPUT))
+typedef enum
+{
+  _LOW_SPEED  = 0x0UL, // 2 MHz
+  _MID_SPEED  = 0x1UL, // 10 MHz
+  _HIGH_SPEED = 0x3UL, // 50 MHz
+} EGpioSpeed;
+
+// Gpio Type macros, MODER related
+#define SetGpioMode(_PORT, _PIN, _TYPE) (_PORT->MODER = (volatile uint32)((_PORT->MODER & (~(0x3UL << (_PIN << 1)))) | (_PORT->MODER | (_TYPE << (_PIN << 1)))))
+#define SetGpioAsAlternate(_PORT, _PIN) (SetGpioMode(_PORT, _PIN, _ALTERNATE))
+#define SetGpioAsAnalog(_PORT, _PIN)    (SetGpioMode(_PORT, _PIN, _ANALOG))
+#define SetGpioAsInput(_PORT, _PIN)     (SetGpioMode(_PORT, _PIN, _INPUT))
+#define SetGpioAsOutput(_PORT, _PIN)    (SetGpioMode(_PORT, _PIN, _OUTPUT))
+
+// Gpio Speed  macros, OSPEEDR related
+#define SetGpioSpeed(_PORT, _PIN, _SPEED) (_PORT->OSPEEDR = (volatile uint32)((_PORT->OSPEEDR & (~(0x3UL << (_PIN << 1)))) | (_PORT->OSPEEDR | (_SPEED<< (_PIN << 1)))))
+#define SetGpioToLowSpeed(_PORT, _PIN)     (SetGpioSpeed(_PORT, _PIN, _LOW_SPEED))
+#define SetGpioToMidSpeed(_PORT, _PIN)     (SetGpioSpeed(_PORT, _PIN, _MID_SPEED))
+#define SetGpioToHighSpeed(_PORT, _PIN)    (SetGpioSpeed(_PORT, _PIN, _HIGH_SPEED))
+
+#define EnablePortGpio(PORT_LETTER)  (RCC->AHBENR |= RCC_AHBENR_GPIO##PORT_LETTER##EN)
+#define DisablePortGpio(PORT_LETTER)  (RCC->AHBENR &= (~RCC_AHBENR_GPIO##PORT_LETTER##EN))
 
 #endif

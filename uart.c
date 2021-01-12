@@ -28,13 +28,9 @@ void PutToSerial(uint8 * value, uint16 len)
 
 void UARTInit(void)
 {
-  EnableGpioClock(GPIOB_PORT);
-  // Set PB6,PB7 as AF Gpio type
-  // TODO make it clean x_x
-  GPIOB->MODER &= (~GPIO_MODER_MODER6_0);
-  GPIOB->MODER |= (GPIO_MODER_MODER6_1);
-  GPIOB->MODER &= (~GPIO_MODER_MODER7_0);
-  GPIOB->MODER |= (GPIO_MODER_MODER7_1);
+  EnablePortGpio(B);
+  SetGpioAsAlternate(GPIOB, RX1);
+  SetGpioAsAlternate(GPIOB, TX1);
   // Set all gpios at max speed, don't care here
   // TODO change it to proper value, does every gpio need fast SPEED?
   GPIOB->OSPEEDR = 0xffffffff;
@@ -60,12 +56,10 @@ void USART1_IRQHandler(void)
     if (rx_char == 'e') // enable LED
     {
       PutToSerial(stringenableled,13);
-      GPIOC->BSRR = GPIO_BSRR_BS_9;
     }
     else if (rx_char == 'd') // disable LED
     {
       PutToSerial(stringdisableled,14);
-      GPIOC->BSRR = GPIO_BSRR_BR_9;
     }
 
     Input.fifo[Input.wi++] = rx_char;

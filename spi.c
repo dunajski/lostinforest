@@ -17,11 +17,13 @@ void SPIInit(void)
   // TODO, check what is better use as AF or change state manually.
   SetGpioAsOutput(GPIOA, CS1);
 
-  // TODO consider that all GPIOs need fast speed?
-  GPIOA->OSPEEDR = 0xffffffff;
+  SetGpioToHighSpeed(GPIOA, MOSI1);
+  SetGpioToHighSpeed(GPIOA, MISO1);
+  SetGpioToHighSpeed(GPIOA, SCK1);
+  SetGpioToHighSpeed(GPIOA, CS1);
 
   // no NEED to set AF registers, AF0 is fine.
-  
+
   RCC->APB2ENR |= RCC_APB2ENR_SPI1EN;
 
   // SPI MASTER, BR b010, fpclk / 8 , fpclk == 8MHz??, SS software, HIGH in idle, 2edge latch

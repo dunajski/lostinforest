@@ -31,9 +31,8 @@ void UARTInit(void)
   EnablePortGpio(B);
   SetGpioAsAlternate(GPIOB, RX1);
   SetGpioAsAlternate(GPIOB, TX1);
-  // Set all gpios at max speed, don't care here
-  // TODO change it to proper value, does every gpio need fast SPEED?
-  GPIOB->OSPEEDR = 0xffffffff;
+  SetGpioToHighSpeed(GPIOB, RX1);
+  SetGpioToHighSpeed(GPIOB, TX1);
 
   RCC->APB2ENR |= RCC_APB2ENR_USART1EN; // Enable clock for USART1
 
